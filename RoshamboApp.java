@@ -1,109 +1,78 @@
 package lab14;
 
 import java.util.Scanner;
-import java.lang.NullPointerException;
 
-public class RoshamboApp extends ConsolePlayer {
+public class RoshamboApp {
 
-	private RoshamboApp playerOne;
+	static Scanner scan = new Scanner(System.in);
 
-	public RoshamboApp(String userName) {
-		super();
-	}
+	public static void main(String[] args) {
 
-	public static void main(String[] args, Roshambo String) {
-		
-		boolean valid = false;
-		Scanner scnr = new Scanner(System.in);
-		String userName = null;
-		String ans = null;
-		Player playerOne = new Player();
-		Player playerTwo;
-		
-		 System.out.println("Welcome to Roshambo!\n");
-		 System.out.println("Enter your name: ");
-		 userName = scnr.nextLine();
-		 System.out.println("Hi " + userName + "!😃 "); 
-		
-			 System.out.println("\nSelect your opponent😈:   'Buttons the Bandit' 🦸 or 'Crimson Chaos' 🦸.");
-			 String userChoice = scnr.nextLine();
-			 Playerpick(userChoice, ans);
-	}
-		 public Roshambo generateRashambo() {
-				System.out.println("\nRock, paper, scissors? ");
-				Scanner userInput = null;
-				String choice = userInput .nextLine().toUpperCase();
-				return validateChoice(choice, userInput);
+		System.out.println("Welcome to the game! \n");
 
-			}
-			Roshambo playerTwoPlayer = playerTwo.generateRashambo();
-			System.out.println(playerOne.getName() + ": " + p1Played);
-			System.out.println(playerTwo.getName() + ": " + p2Played);
-			String winner = findWinner(playerOnePlayed, playerTwoPlayer);
-			System.out.println(winner);	
-			
-			System.out.println("Would you like to play again? y/n");
-			choice = in.nextLine().toUpperCase().charAt(0);
-			
-		} while(choice == 'Y');
-		
+		Player rockPlayer = new RockPlayer();
+		Player randomPlayer = new randPlayer();
+		Player humanPlayer = new ConsolePlayer();
+
+		Roshambo r2 = rockPlayer.generateRoshambo();
+		Roshambo r1 = humanPlayer.generateRoshambo();
+
+		System.out.println("Enter your name: ");
+		String name = scan.nextLine();
+		humanPlayer.setName(name);
+		boolean validInput = false;
+		String input;
+
+		do {
+			do {
+				input = Validator.getString(scan, "Enter rock, paper, or scissors.\n");
+
+				if (input.toLowerCase().startsWith("r") || input.toLowerCase().startsWith("p")
+						|| input.toLowerCase().startsWith("s")) {
+					r1 = humanPlayer.generateRoshambo(input);
+					validInput = true;
+				}
+			} while (!validInput);
+
+			Roshambo r3 = humanPlayer.generateRoshambo(input);
+
+			do {
+				input = Validator.getString(scan, "Would you like to play against Buttons the bandit or Crimson Chaos?");
+				if (input.equalsIgnoreCase("Buttons the bandit")) {
+					r2 = rockPlayer.generateRoshambo();
+					validInput = false;
+				} else if (input.equalsIgnoreCase("Crimson Chaos")) {
+					r2 = randomPlayer.generateRoshambo();
+					validInput = false;
+				} else {
+					System.out.println("Sorry! Try 'Buttons the bandit' or 'Crimson Chaos'");
+					validInput = true;
+				}
+			} while (validInput);
+			System.out.println(getWinner(r1, r2));
+
+			System.out.println("Continue? (y/n)");
+			input = scan.nextLine();
+		} while (input.equalsIgnoreCase("y"));
+
 		System.out.println("Goodbye!");
-		
-		scnr.close();
-		
-	}
-	
-	public static String findWinner(Roshambo player1, Roshambo player2) {
-		
-		if(player1 == player2 ) {
-			return "Tie!";
-		}else if (player1 == Roshambo.ROCK)
-		{
-			if(player2 == Roshambo.SCISSORS)
-			{
-				return "Player 1 wins";
-			}else {
-				return "Player 2 wins";
-			}
-		}else if(player1 == Roshambo.PAPER)
-		{
-			if(player2 == Roshambo.ROCK)
-			{
-				return "Player 1 wins";
-			}else {
-				return "Player 2 wins";
-			}
-		}else {
-			if(player2 == Roshambo.PAPER)
-			{
-				return "Player 1 wins";
-			}else {
-				return "Player 2 wins";
-			}
-		}
-	}
-	
-	public static Roshambo getRoshambo(String userInput) {
-		
-		if (userInput.equals("rock"))
-		{
-			return Roshambo.ROCK;
-		}else if(userInput.equals("paper")) {
-			return Roshambo.PAPER;
-		}else {
-			return Roshambo.SCISSORS;
-		}
-		
+		scan.close();
+
 	}
 
-	private static void Playerpick(String userChoice, String ans) {
-		if (userChoice.equalsIgnoreCase("Buttons the Bandit")) {
-			ans = ("Nice choice, here we go!🦸..");
-			System.out.println(ans);
-		} else if (userChoice.equalsIgnoreCase("Crimson Chaos")) {
-			ans = ("Nice choice, here we go! 🦸🏻‍♀️.. ");
-			System.out.println(ans);
+	public static String getWinner(Roshambo r1, Roshambo r2) {
+
+		if (r1.equals(Roshambo.ROCK) && r2.equals(Roshambo.SCISSORS)
+				|| r1.equals(Roshambo.SCISSORS) && r2.equals(Roshambo.PAPER)
+				|| r1.equals(Roshambo.PAPER) && r2.equals(Roshambo.ROCK)) {
+			return "You Win!";
+
+		} else if (r1.equals(r2)) {
+			return ("It's a tie!");
+		} else {
+			return "You Lose.";
 		}
 
 	}
+
 }

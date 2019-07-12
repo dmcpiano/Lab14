@@ -1,37 +1,36 @@
 package lab14;
 
-import java.util.Scanner;
-
 public abstract class Player {
-
-	private String userName;
+	
+	private String name;
 	
 	public Player() {
 		
 	}
 	
-	public abstract Roshambo generateRoshambo();
+	public Player(String name) {
+		super();
+		this.name = name;
+	}
+	
+
+	@Override
+	public String toString() {
+		return "Player [name=" + name + "]";
+	}
 
 	public String getName() {
-		return userName;
+		return name;
 	}
 
-	public String setName(String name) {
-		return this.userName = userName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Roshambo generateRoshambo(Roshambo randomer) {
-		
+	public abstract Roshambo generateRoshambo();
+
+	public Roshambo generateRoshambo(String input) {
 		return null;
 	}
 
-	public String setName(Scanner scnr, String userName) {
-		return null;
-	}
-
-	public Roshambo generateRashambo() {
-		// TODO Auto-generated method stub
-		return null;
-	} 
-	
 }

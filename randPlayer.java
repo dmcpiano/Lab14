@@ -4,29 +4,22 @@ import java.util.Scanner;
 
 public class randPlayer extends Player{
 
-	private Roshambo randomer;
-	
 	@Override
 	public Roshambo generateRoshambo() {
-	
 		
-		switch (randomer) {
+		int random = (int) Math.random()*3+1;
 		
-		case 1:
-			randomer = Roshambo.ROCK;
-			break;
-
-		case 2: 
-			randomer = Roshambo.SCISSORS;
-			break;
-
-		case 3:
-			randomer = Roshambo.PAPER;
-			break;
+		if(random == 1) {
+			return Roshambo.ROCK;
+		} else if(random == 2) {
+			return Roshambo.SCISSORS;		
+		} else {
+			return Roshambo.PAPER;
 		}
-		System.out.println(randomer);
-	
 		
 	}
+	
+	
 
 }
+
